@@ -1,0 +1,35 @@
+import unittest
+from triangle import Triangle, calculate_perimeter
+
+
+class TestTriangle(unittest.TestCase):
+    """Unit tests for the Triangle class and calculate_perimeter function."""
+
+    def test_perimeter_integer_sides(self):
+        triangle = Triangle(3, 4, 5)
+        self.assertEqual(triangle.perimeter(), 12)
+        self.assertEqual(calculate_perimeter(triangle), 12)
+
+    def test_perimeter_float_sides(self):
+        triangle = Triangle(2.5, 3.5, 4.0)
+        self.assertAlmostEqual(triangle.perimeter(), 10.0)
+        self.assertAlmostEqual(calculate_perimeter(triangle), 10.0)
+
+    def test_negative_side_raises_error(self):
+        with self.assertRaises(ValueError):
+            Triangle(-1, 2, 3)
+
+    def test_zero_side_raises_error(self):
+        with self.assertRaises(ValueError):
+            Triangle(0, 4, 5)
+
+    def test_triangle_inequality_violation_raises_error(self):
+        # Any two sides must sum to strictly greater than the third side.
+        with self.assertRaises(ValueError):
+            Triangle(1, 2, 3)  # 1 + 2 == 3 (violates strict inequality)
+        with self.assertRaises(ValueError):
+            Triangle(10, 2, 3)  # 2 + 3 < 10 (violates inequality)
+
+
+ if __name__ == "__main__":
+     unittest.main()
